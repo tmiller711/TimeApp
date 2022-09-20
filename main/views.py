@@ -10,21 +10,33 @@ from .models import *
 from .utils import Calendar
 from .forms import EventForm
 
-class CalendarView(generic.ListView):
-    model = Event
-    template_name = 'main/calendar.html'
+# class CalendarView(generic.ListView):
+#     model = Event
+#     template_name = 'main/calendar.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        d = get_date(self.request.GET.get('month', None))
-        today = datetime.today()
-        cal = Calendar(d.year, d.month)
-        html_cal = cal.formatmonth(withyear=True)
-        context['calendar'] = mark_safe(html_cal)
-        context['prev_month'] = cal.prev_month(d)
-        context['next_month'] = cal.next_month(d)
-        # print(html_cal)
-        return context
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         d = get_date(self.request.GET.get('month', None))
+#         today = datetime.today()
+#         cal = Calendar(d.year, d.month)
+#         html_cal = cal.formatmonth(withyear=True)
+#         context['calendar'] = mark_safe(html_cal)
+#         context['prev_month'] = cal.prev_month(d)
+#         context['next_month'] = cal.next_month(d)
+#         # print(html_cal)
+#         return context
+
+def calendar_view(request):
+    d = get_date(request.GET.get('month', None))
+    today = datetime.today()
+    cal = Calendar(d.year, d.month)
+    html_cal = cal.formatmonth(withyear=True)
+    calendar = mark_safe(html_cal)
+    prev_month = cal.prev_month(d)
+    next_month = cal.next_month(d)
+    # print(html_cal)
+    print(request.user)
+    return render(request, 'main/calendar.html', {'calendar': calendar, 'prev_month': prev_month, 'next_month': next_month})
 
 # if there is an event_id we want to use that object and if it doesn't we want a new object
 def event(request, event_id=None):
