@@ -20,11 +20,10 @@ class CalendarView(generic.ListView):
         today = datetime.today()
         cal = Calendar(d.year, d.month)
         html_cal = cal.formatmonth(withyear=True)
-        html_cal = html_cal.replace("<td><span class='date'>%i</span>"%today.day, '<td bgcolor="#EEE3CB"><span class="date" bgcolor="#66ff66"><b><u>%i - Today</u></b>'%today.day)
         context['calendar'] = mark_safe(html_cal)
         context['prev_month'] = cal.prev_month(d)
         context['next_month'] = cal.next_month(d)
-        print(html_cal)
+        # print(html_cal)
         return context
 
 # if there is an event_id we want to use that object and if it doesn't we want a new object
@@ -42,8 +41,14 @@ def event(request, event_id=None):
     return render(request, 'main/event.html', {'form': form})
 
 
+def day(request, year, month, day):
+    date = str(year) + '-' + str(month) + '-' + str(day)
+    return render(request, 'main/day.html', {'date': date})
+
+
 def get_date(req_day):
     if req_day:
         year, month = (int(x) for x in req_day.split('-'))
         return date(year, month, day=1)
     return datetime.today()
+

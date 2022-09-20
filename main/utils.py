@@ -14,11 +14,15 @@ class Calendar(HTMLCalendar):
     def formatday(self, day, events):
         events_per_day = events.filter(start_time__day=day)
         d = ''
+        today = datetime.today()
         for event in events_per_day:
             d += f'<li> {event.get_html_url} </li>'
 
-        if day != 0:
-            return f"<td><span class='date'>{day}</span><ul> {d} </ul></td>"
+        if day == today.day:
+            return f"<td class='today'><span class='date' id='today'><a class='day-link' href='{self.year}-{self.month}-{day}'>{day} - Today</a></span><ul> {d} </ul></td>"
+        elif day != 0:
+            return f"<td><span class='date'><a class='day-link' href='{self.year}-{self.month}-{day}'>{day}</a></span><ul> {d} </ul></td>"
+
         return '<td></td>'
 
     # formats a week as a tr

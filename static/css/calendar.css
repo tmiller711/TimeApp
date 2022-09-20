@@ -1,5 +1,6 @@
 .calendar {
     width: 98%;
+    height: 90%;
     margin: auto;
     font-size: 13px;
   }
@@ -16,12 +17,12 @@
 
 .calendar td {
   width: 200px;
-  height: 150px;
+  height: 130px;
   padding: 20px 0px 0px 5px;
 }
 
 .month {
-  font-size: 25px;
+  font-size: 30px;
 }
 
 .date {
@@ -34,7 +35,7 @@ ul {
 }
 
 a {
-  color: #17a2b8;
+  color: #967E76;
 }
 
 .left {
@@ -62,9 +63,22 @@ a {
 
 .form input, .form select, .form textarea {
   border-radius: 5px;
-  border: 1px solid #17a2b8;
+  border: 1px solid #967E76;
   outline: none;
   background: none;
   padding: 5px;
   width: 100%;
+}
+
+a.btn.btn-outline-primary.left:active {
+  border: black !important;
+}
+
+td.today {
+  background-color: #967E76;
+}
+
+
+a.day-link {
+  color: black;
 }

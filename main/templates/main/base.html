@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {<title>{% block title %}{% endblock %}</title>}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/700caa9d7b.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{% static '/css/base.css' %}?version=2">
+    {% block additionalStyles %}{% endblock %}
+</head>
+<body>
+    <div class="header">
+        <div class="side-nav">
+            <a href="#" class="logo">
+                <img src="{% static '/images/logo.png' %}" alt="404" class="logo-img">
+            </a>
+            <ul class="nav-links">
+                <li><a href="#"></i><i class="fa-solid fa-house-user"></i><p>Dashboard</p></a></li>
+                <li><a href="#"><i class="fa-solid fa-message"></i><p>Message</p></a></li>
+                <li><a href="#"><i class="fa-sharp fa-solid fa-gear"></i><p>Settings</p></a></li>
+                <div class="active"></div>
+            </ul>
+        </div>
+    </div>
+
+    <div id="content", name="content", class="main">
+        <div class="main-block">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+    
+</body>
+</html>
