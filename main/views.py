@@ -19,7 +19,6 @@ def calendar_view(request):
     prev_month = cal.prev_month(d)
     next_month = cal.next_month(d)
     # print(html_cal)
-    print(request.user)
     return render(request, 'main/calendar.html', {'calendar': calendar, 'prev_month': prev_month, 'next_month': next_month})
 
 # if there is an event_id we want to use that object and if it doesn't we want a new object
@@ -38,6 +37,7 @@ def event(request, event_id=None):
 
 
 def day(request, year, month, day):
+    date = str(year) + '-' + str(month) + '-' + str(day)
     if request.method == "POST":
         form = TaskForm(request.POST)
         if form.is_valid():
@@ -51,9 +51,14 @@ def day(request, year, month, day):
     else:
         form = TaskForm()
 
-    tasks = Task.objects.filter(user=request.user)
+    t = Task.objects.filter(user=request.user)
+    # make it so you can only see the tasks for a certain day
+    tasks = []
+    for task in t:
+        task_date = task.start_time.date().strftime('%Y-%-m-%-d')
+        if task_date == date:
+            tasks.append(task)
 
-    date = str(year) + '-' + str(month) + '-' + str(day)
     return render(request, 'main/day.html', {'date': date, 'form': form, 'tasks': tasks})
 
 
