@@ -53,6 +53,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'timeapp.middleware.LoginRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'timeapp.urls'
@@ -133,5 +135,12 @@ STATICFILES_DIRS = (
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+LOGIN_URL = '/login'
+LOGIN_EXEMPT_URLS = (
+    r'^logout/$',
+    r'^register/$'
+)
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
