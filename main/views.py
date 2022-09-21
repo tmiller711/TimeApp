@@ -8,23 +8,7 @@ from django.urls import reverse
 
 from .models import *
 from .utils import Calendar
-from .forms import EventForm
-
-# class CalendarView(generic.ListView):
-#     model = Event
-#     template_name = 'main/calendar.html'
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         d = get_date(self.request.GET.get('month', None))
-#         today = datetime.today()
-#         cal = Calendar(d.year, d.month)
-#         html_cal = cal.formatmonth(withyear=True)
-#         context['calendar'] = mark_safe(html_cal)
-#         context['prev_month'] = cal.prev_month(d)
-#         context['next_month'] = cal.next_month(d)
-#         # print(html_cal)
-#         return context
+from .forms import TaskForm
 
 def calendar_view(request):
     d = get_date(request.GET.get('month', None))
@@ -54,8 +38,23 @@ def event(request, event_id=None):
 
 
 def day(request, year, month, day):
+    if request.method == "POST":
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            user = request.user
+            topic = form['topic'].value()
+            description = form['description'].value()
+            start_time = form['start_time'].value()
+            end_time = form['end_time'].value()
+            t = Task(user=user, topic=topic, description=description, start_time=start_time, end_time=end_time)
+            t.save()
+    else:
+        form = TaskForm()
+
+    tasks = Task.objects.filter(user=request.user)
+
     date = str(year) + '-' + str(month) + '-' + str(day)
-    return render(request, 'main/day.html', {'date': date})
+    return render(request, 'main/day.html', {'date': date, 'form': form, 'tasks': tasks})
 
 
 def get_date(req_day):

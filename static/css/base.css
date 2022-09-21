@@ -120,3 +120,8 @@
 .main div.main-block {
     margin-left: 250px;
 }
+
+a.login {
+    color: blue;
+    text-decoration: underline;
+}
