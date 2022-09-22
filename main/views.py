@@ -1,14 +1,16 @@
-from datetime import datetime, timedelta, date
+from datetime import datetime, timedelta, date, time
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
 from django.http import HttpResponse
 from django.views import generic
 from django.utils.safestring import mark_safe
 from calendar import HTMLCalendar
 from django.urls import reverse
+import pytz
+from operator import attrgetter
 
 from .models import *
-from .utils import Calendar
-from .forms import TaskForm
+from .utils import Calendar, calc_time_dif
+from .forms import TaskForm, BlockForm
 
 def calendar_view(request):
     d = get_date(request.GET.get('month', None))
@@ -38,28 +40,66 @@ def event(request, event_id=None):
 
 def day(request, year, month, day):
     date = str(year) + '-' + str(month) + '-' + str(day)
-    if request.method == "POST":
-        form = TaskForm(request.POST)
-        if form.is_valid():
+    block_form = None
+    task_form = None
+
+    if 'create_block' in request.POST:
+        block_form = BlockForm(request.POST)
+        if block_form.is_valid():
             user = request.user
-            topic = form['topic'].value()
-            description = form['description'].value()
-            start_time = form['start_time'].value()
-            end_time = form['end_time'].value()
-            t = Task(user=user, topic=topic, description=description, start_time=start_time, end_time=end_time)
+            topic = block_form['topic'].value()
+            description = block_form['description'].value()
+            start_time = block_form['start_time'].value()
+            end_time = block_form['end_time'].value()
+            t = Block(user=user, topic=topic, description=description, start_time=start_time, end_time=end_time)
             t.save()
-    else:
-        form = TaskForm()
+            block_form = None
+    elif 'add_task' in request.POST:
+        print("adding task test")
+        task_form = None
+    elif request.method == "GET":
+        if request.GET.get('add-block') == 'add-block':
+            block_form = BlockForm()
+        elif request.GET.get('add-task') == 'add-task':
+            task_form = TaskForm()
 
-    t = Task.objects.filter(user=request.user)
+    b = Block.objects.filter(user=request.user)
     # make it so you can only see the tasks for a certain day
-    tasks = []
-    for task in t:
-        task_date = task.start_time.date().strftime('%Y-%-m-%-d')
-        if task_date == date:
-            tasks.append(task)
+    blocks = []
+        
+    cur_time = pytz.timezone('America/Chicago') 
+    standard_time = datetime.now(cur_time).strftime("%I:%M %p")
 
-    return render(request, 'main/day.html', {'date': date, 'form': form, 'tasks': tasks})
+    mil_time = str(datetime.now(cur_time).time()).split('.')[0]
+    mil_time = datetime.strptime(mil_time, "%H:%M:%S").time()
+
+    wake_up_time = time(8, 0, 0)
+
+    for block in b:
+        block_date = block.start_time.date().strftime('%Y-%-m-%-d')
+        block_starttime = block.start_time.time()
+        block_endtime = block.end_time.time()
+
+        if block_date == date:
+            blocks.append(block)
+
+        if block_starttime <= mil_time and block_endtime >= mil_time:
+            cur_block = block
+            time_diff = calc_time_dif(block_starttime, block_endtime)
+            cur_time_diff = calc_time_dif(block_starttime, mil_time)
+            percent_done = int((cur_time_diff / time_diff) * 100)
+    
+    # sort tasks by start_time
+    blocks.sort(key=attrgetter('start_time'))
+
+    context = {'date': date, 'block_form': block_form, 'task_form': task_form, 'blocks': blocks,
+             'cur_time': standard_time, 'wake_up_time': wake_up_time}
+
+    if 'cur_block' in locals() and 'percent_done' in locals():
+        context['cur_block'] = cur_block
+        context['percent_done'] = percent_done
+
+    return render(request, 'main/day.html', context)
 
 
 def get_date(req_day):

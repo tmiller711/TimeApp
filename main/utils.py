@@ -56,3 +56,9 @@ class Calendar(HTMLCalendar):
         next_month = last + timedelta(days=1)
         month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
         return month
+
+def calc_time_dif(start_time, end_time):
+    start_seconds = (start_time.second) + (start_time.minute * 60) + ((start_time.hour * 60) * 60)
+    end_seconds = (end_time.second) + (end_time.minute * 60) + ((end_time.hour * 60) * 60)
+
+    return end_seconds - start_seconds

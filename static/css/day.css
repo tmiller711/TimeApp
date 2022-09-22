@@ -1,0 +1,22 @@
+form#add-task-form {
+    width: 500px;
+}
+
+div.time-blocking {
+    position: relative;
+    float: left;
+    padding: 10px 10px 10px 10px;
+}
+
+div.form {
+    float: right;
+}
+
+div.current-block {
+    position: absolute;
+    float: right;
+    bottom: 0;
+    right: 0;
+    padding: 10px 500px 500px 10px;
+    border: 1px solid black;
+}

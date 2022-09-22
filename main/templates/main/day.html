@@ -1,19 +1,69 @@
 {% extends 'main/base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 
 {% block title %}test title{% endblock %}
 
-{% block content %}
-<h1>{{ date }}</h1>
-<form method="POST" class="form-group">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <button type="submit" class="btn btn-success">Add Task</button>
-</form>
+{% block additionalStyles %}
+  <link rel="stylesheet" type="text/css" href="{% static '/css/day.css' %}?version=9">
+{% endblock %}
 
-<h2>Current tasks:</h2>
+{% block content %}
+<h1>{{ date }} : {{ cur_time }}</h1>
+<div class="form">
+    {% if block_form %}
+        <form method="POST" class="form-group" id="add-task-form">
+            {% csrf_token %}
+            {{ block_form|crispy }}
+            <button type="submit" class="btn btn-success" name="create_block">Save</button>
+        </form>
+    {% elif not block_form %}
+        <form method="get">
+            <button type="submit" class="btn btn-primary" name="add-block" value="add-block">Add Block</button>
+        </form>
+    {% endif %}
+</div>
+
+<!-- <h2>To Do:</h2>
 {% for task in tasks %}
-{{task.topic}}
-{% endfor %}
+<ul>
+    <li>- {{task.topic}}</li>
+</ul>
+
+{% endfor %} -->
+
+<div class="time-blocking">
+    <ul>
+        <li>
+            <h2>Wake up: {{wake_up_time}}</h2>
+        </li>
+        {% for block in blocks %}
+            <li>
+                <h2>{{ block.topic }}</h2>
+                <p>{{block.start_time.time}} - {{block.end_time.time}}</p>
+            </li>
+        {% endfor %}
+    </ul>
+</div> 
+
+<div class="current-block">
+    <h2 class="block-title">{{ cur_block.topic }}: {{ cur_block.start_time.time }} - {{ cur_block.end_time.time }}</h2>
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" style="width: {{percent_done}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{percent_done}}%</div>
+    </div>
+    <div class="form">
+        {% if task_form %}
+        <form method="POST" class="form-group" id="add-task-form">
+            {% csrf_token %}
+            {{ task_form|crispy }}
+            <button type="submit" class="btn btn-success" name="add_task">Add</button>
+        </form>
+        {% elif not block_form %}
+            <form method="get">
+                <button type="submit" class="btn btn-primary" name="add-task" value="add-task">Add Task</button>
+            </form>
+        {% endif %}
+    </div>
+</div>
 
 {% endblock %}
