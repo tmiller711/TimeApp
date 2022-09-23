@@ -31,7 +31,7 @@ class Calendar(HTMLCalendar):
     def formatweek(self, theweek, events, request):
         week = ''
         for d, weekday in theweek:
-            week += self.formatday(d, events)
+            week += self.formatday(d, events, request)
         return f'<tr> {week} </tr>'
 
     # formats a month as a table
