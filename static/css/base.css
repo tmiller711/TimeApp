@@ -1,61 +1,73 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+body {
+    font-family: "Poppins", sans-serif;
+    transition: background-color .5s;
 }
 
-/* .header{
-    width: 100%;
+.sidenav {
     height: 100vh;
-    background: #B7C4CF;
-} */
-
-.side-nav {
-    width: 250px;
-    height: 100%;
-    background: #6B99C3;
+    width: 0;
     position: fixed;
+    z-index: 1;
     top: 0;
     left: 0;
-    padding: 20px 30px;
-    z-index: 9;
+    background-color: #6B99C3;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    transition: 0.5s;
+    padding-top: 10px;
+}
+
+.nav-links li {
+    list-style: none;
+}
+  
+.nav-links a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
     color: #0C151C;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #E4E5EA;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 20px;
+    font-size: 66px;
+    margin-left: 10px;
+    padding-left: 10px;
+    color: #0C151C;
+    text-decoration: none;
+}
+
+#content{
+    transition: margin-left .5s;
+    padding: 16px;
+    position:absolute;
+    top:0px;
+    right:0px;
+    bottom:0px;
+    left:0px;
+    background: #E4E5EA;
 }
 
 .logo {
     display: block;
+    margin-top: 30px;
     margin-bottom: 130px;
 }
 
 .logo-img {
     width: 150px;
-    margin-left: 13px;
+    margin-left: 36px;
 }
 
-.nav-links {
-    list-style: none;
-    position: relative;
-}
-
-.nav-links li {
-    padding: 10px 0;
-}
-
-.nav-links li a {
-    color: #0C151C;
-    text-decoration: none;
-    padding: 15px 0px;
-    display: flex;
-    align-items: center;
-}
-
-.nav-links li a i {
-    font-size: 45px;
-    margin-right: 20px;
-}
-
-.active {
+/* .active {
     background: white;
     width: 100%;
     height: 73px;
@@ -88,41 +100,9 @@
 
 .nav-links li:nth-child(3):hover ~ .active {
     top: 21%;
-}
+} */
 
-@media only screen and (max-width: 600px) {
-    .side-nav {
-        width: 110px;
-    }
-    .logo {
-        display: block;
-        width: 45px;
-    }
-    .nav-links li a p {
-        display: none;
-    }
-    .nav-links li a i {
-        margin-right: 0;
-    }
-    .nav-links li a {
-        justify-content: center;
-    }
-}
-
-.main{
-    position:absolute;
-    top:0px;
-    right:0px;
-    bottom:0px;
-    left:0px;
-    background: #E4E5EA;
-}
-
-.main div.main-block {
-    margin-left: 250px;
-}
-
-a.login {
-    color: #16354D;
-    text-decoration: underline;
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
 }

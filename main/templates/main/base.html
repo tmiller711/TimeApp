@@ -8,14 +8,15 @@
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/700caa9d7b.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="{% static '/css/base.css' %}?version=8">
+    <link rel="stylesheet" type="text/css" href="{% static '/css/base.css' %}?version=13">
     {% block additionalStyles %}{% endblock %}
 </head>
 <body>
     <div class="header">
-        <div class="side-nav">
+        <div class="sidenav" id="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             {% if request.user.is_authenticated %}
-            <h2>User: {{ request.user }}</h2>
+            <h2>{{ request.user }}</h2>
             {% else %}
             <a href="/login" class="login"><h2>Login</h2></a>
             {% endif %}
@@ -32,6 +33,7 @@
     </div>
 
     <div id="content", name="content", class="main">
+        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span>
         <div class="main-block">
             {% block content %}
             {% endblock %}
@@ -44,6 +46,19 @@
     crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
+    <script>
+    function openNav() {
+        document.getElementById("sidenav").style.width = "250px";
+        document.getElementById("content").style.marginLeft = "250px";
+        document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+    }
+    
+    function closeNav() {
+        document.getElementById("sidenav").style.width = "0";
+        document.getElementById("content").style.marginLeft= "0";
+        document.body.style.backgroundColor = "#6B99C3";
+    }
+    </script>
     
 </body>
 </html>
