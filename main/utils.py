@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 from calendar import HTMLCalendar
+from this import d
 from .models import Event
 import calendar
 import pytz
@@ -15,7 +16,7 @@ class Calendar(HTMLCalendar):
     def formatday(self, day, events, request):
         events_per_day = events.filter(start_time__day=day)
         d = ''
-        timezone = pytz.timezone(request.user.timezone)
+        timezone = pytz.timezone(get_timezone(request))
         today = datetime.now(timezone)
         for event in events_per_day:
             d += f'<li> {event.get_html_url} </li>'
@@ -64,3 +65,9 @@ def calc_time_dif(start_time, end_time):
     end_seconds = (end_time.second) + (end_time.minute * 60) + ((end_time.hour * 60) * 60)
 
     return end_seconds - start_seconds
+
+def get_timezone(request):
+    try:
+        return request.user.userprofile.timezone
+    except:
+        return 'America/Chicago'

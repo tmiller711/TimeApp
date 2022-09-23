@@ -9,7 +9,7 @@ import pytz
 from operator import attrgetter
 
 from .models import *
-from .utils import Calendar, calc_time_dif
+from .utils import Calendar, calc_time_dif, get_timezone
 from .forms import TaskForm, BlockForm
 
 def calendar_view(request):
@@ -31,7 +31,7 @@ def day(request, year, month, day):
     # make it so you can only see the tasks for a certain day
     blocks = []
         
-    cur_time = pytz.timezone(request.user.timezone) 
+    cur_time = pytz.timezone(get_timezone(request)) 
     standard_time = datetime.now(cur_time).strftime("%I:%M %p")
 
     mil_time = str(datetime.now(cur_time).time()).split('.')[0]
@@ -73,7 +73,6 @@ def day(request, year, month, day):
                 task.complete = False
             task.save()
     elif request.POST.get("newTask"):
-        print("new task")
         name = request.POST.get("new")
 
         if len(name) > 2:
@@ -91,7 +90,6 @@ def day(request, year, month, day):
     else:
         tasks = None
 
-    print(blocks)
     context = {'date': date, 'block_form': block_form, 'blocks': blocks,
              'cur_time': standard_time, 'wake_up_time': wake_up_time, 'bedtime': bedtime, 'tasks': tasks}
 

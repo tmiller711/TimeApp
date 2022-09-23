@@ -14,7 +14,7 @@ class UserProfileForm(ModelForm):
     class Meta:
         model = UserProfile
         fields = ['name', 'phone', 'timezone']
-        timezones = [('US/Chicago', 'US/Chicago'), ('US/New_York', 'US/New_York')]
+        timezones = [('America/Chicago', 'America/Chicago'), ('America/New_York', 'America/New_York')]
         widgets = {
             'timezone': Select(choices=timezones)
         }
