@@ -29,12 +29,17 @@
         <li>
             <h2>Wake up: {{wake_up_time}}</h2>
         </li>
-        {% for block in blocks %}
-            <li>
-                <h2>{{ block.topic }}</h2>
-                <p>{{block.start_time.time}} - {{block.end_time.time}}</p>
-            </li>
-        {% endfor %}
+        <form method="post">
+            {% csrf_token %}
+            {% for block in blocks %}
+                <li>
+                    <!-- <h2>{{ block.topic }}</h2> -->
+                    <input type="text", value="{{block.topic}}" name="block{{block.id}}" class="form-control">
+                    <p>{{block.start_time.time}} - {{block.end_time.time}}</p>
+                </li>
+            {% endfor %}
+            <button type="submit", name="update-block", value="update-block", class="btn btn-primary">Update</button>
+        </form>
         <li><h2>Sleep: {{ bedtime }}</h2></li>
     </ul>
 </div> 
@@ -68,7 +73,7 @@
             </div>
             <input type="text", name="new">
         </div>
-        <button type="submit", name="save", value="save", class="btn btn-primary">Save</button>
+        <button type="submit", name="save-tasks", value="save-tasks", class="btn btn-primary">Save</button>
     </form>
     </div>
 </div>

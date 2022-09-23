@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta, date, time
+from tabnanny import check
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
 from django.http import HttpResponse
 from django.views import generic
@@ -9,7 +10,7 @@ import pytz
 from operator import attrgetter
 
 from .models import *
-from .utils import Calendar, calc_time_dif, get_timezone
+from .utils import Calendar, calc_time_dif, get_timezone, check_reqeust
 from .forms import TaskForm, BlockForm
 
 def calendar_view(request):
@@ -26,10 +27,6 @@ def calendar_view(request):
 def day(request, year, month, day):
     date = str(year) + '-' + str(month) + '-' + str(day)
     block_form = None
-
-    b = Block.objects.filter(user=request.user)
-    # make it so you can only see the tasks for a certain day
-    blocks = []
         
     cur_time = pytz.timezone(get_timezone(request)) 
     standard_time = datetime.now(cur_time).strftime("%I:%M %p")
@@ -40,6 +37,8 @@ def day(request, year, month, day):
     wake_up_time = time(8, 0, 0)
     bedtime = time(22, 0, 0)
 
+    b = Block.objects.filter(user=request.user)
+    blocks = []
     for block in b:
         block_date = block.start_time.date().strftime('%Y-%-m-%-d')
         block_starttime = block.start_time.time()
@@ -54,33 +53,8 @@ def day(request, year, month, day):
             cur_time_diff = calc_time_dif(block_starttime, mil_time)
             percent_done = int((cur_time_diff / time_diff) * 100)
 
-    if 'create_block' in request.POST:
-        block_form = BlockForm(request.POST)
-        if block_form.is_valid():
-            user = request.user
-            topic = block_form['topic'].value()
-            description = block_form['description'].value()
-            start_time = block_form['start_time'].value()
-            end_time = block_form['end_time'].value()
-            b = Block(user=user, topic=topic, description=description, start_time=start_time, end_time=end_time)
-            b.save()
-            block_form = None
-    elif 'save' in request.POST:
-        for task in Task.objects.all():
-            if request.POST.get("c" + str(task.id)) == "clicked":
-                task.complete = True
-            else:
-                task.complete = False
-            task.save()
-    elif request.POST.get("newTask"):
-        name = request.POST.get("new")
-
-        if len(name) > 2:
-            t = Task(name=name, complete=False, block=cur_block)
-            t.save()
-    elif request.method == "GET":
-        if request.GET.get('add-block') == 'add-block':
-            block_form = BlockForm()
+    # check for POST and GET requests
+    block_form = check_reqeust(request, cur_block, blocks)
     
     # sort tasks by start_time
     blocks.sort(key=attrgetter('start_time'))

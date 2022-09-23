@@ -4,6 +4,8 @@ from this import d
 from .models import Event
 import calendar
 import pytz
+from .models import Block, Task
+from .forms import BlockForm, TaskForm
 
 class Calendar(HTMLCalendar):
     def __init__(self, year=None, month=None):
@@ -71,3 +73,42 @@ def get_timezone(request):
         return request.user.userprofile.timezone
     except:
         return 'America/Chicago'
+
+def check_reqeust(request, cur_block, blocks):
+    if 'create_block' in request.POST:
+        block_form = BlockForm(request.POST)
+        if block_form.is_valid():
+            user = request.user
+            topic = block_form['topic'].value()
+            description = block_form['description'].value()
+            start_time = block_form['start_time'].value()
+            end_time = block_form['end_time'].value()
+            b = Block(user=user, topic=topic, description=description, start_time=start_time, end_time=end_time)
+            b.save()
+            block_form = None
+            return block_form
+
+    elif 'save-tasks' in request.POST:
+        for task in Task.objects.all():
+            if request.POST.get("c" + str(task.id)) == "clicked":
+                task.complete = True
+            else:
+                task.complete = False
+            task.save()
+
+    elif request.POST.get("update-block"):
+        for block in blocks:
+            if request.POST.get("block" + str(block.id)) != block.topic:
+                Block.objects.filter(pk=block.id).update(topic=request.POST.get("block" + str(block.id)))
+
+    elif request.POST.get("newTask"):
+        name = request.POST.get("new")
+
+        if len(name) > 2:
+            t = Task(name=name, complete=False, block=cur_block)
+            t.save()
+            
+    elif request.method == "GET":
+        if request.GET.get('add-block') == 'add-block':
+            block_form = BlockForm()
+            return block_form
