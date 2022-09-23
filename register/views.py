@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import RegisterForm
+from .forms import RegisterForm, UserProfileForm
 from django.contrib.auth.models import User
 from .models import UserProfile
 
@@ -18,4 +18,13 @@ def register(request):
     return render(request, "register/register.html", {"form": form})
 
 def profile(request):
-    pass
+    userprofile, created = UserProfile.objects.get_or_create(user=request.user)
+    if request.method == "POST":
+        form = UserProfileForm(request.POST, instance=userprofile)
+        if form.is_valid():
+            form.save()
+    else:
+        form = UserProfileForm(instance=userprofile)
+
+    print(request.user.userprofile.timezone)
+    return render(request, "register/profile.html", {'form': form})
