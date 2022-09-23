@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block additionalStyles %}
+  <link rel="stylesheet" type="text/css" href="{% static '/css/profile.css' %}?version=5">
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-3">
+        <p>Name: {{request.user.username}}</p>
+        <p>Email: {{request.user.email}}</p>
+        <a href="/logout">Logout Here</a>
+    </div>
+
+    <div class="col-9">
+        <form method="POST" class="profile-form">
+            {% csrf_token %}
+            {{form|crispy}}
+            <button type="submit" class="btn btn-success">Update</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

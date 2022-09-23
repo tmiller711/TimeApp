@@ -13,7 +13,12 @@ class RegisterForm(UserCreationForm):
 class UserProfileForm(ModelForm):
     class Meta:
         model = UserProfile
-        fields = ['name', 'phone', 'timezone']
+        fields = ['name', 'phone']
+
+class UserSettingsForm(ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['timezone']
         timezones = [('America/Chicago', 'America/Chicago'), ('America/New_York', 'America/New_York')]
         widgets = {
             'timezone': Select(choices=timezones)
