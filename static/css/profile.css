@@ -1,5 +1,19 @@
-form.profile-form {
+div.profile {
+    position: absolute;
     width: 500px;
+    left: 60%;
+    top: 20%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+div.user-info {
+    position: absolute;
+    width: 500px;
+    left: 40%;
+    top: 20%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 
 div.settings {
