@@ -5,7 +5,7 @@
 {% block title %}test title{% endblock %}
 
 {% block additionalStyles %}
-  <link rel="stylesheet" type="text/css" href="{% static '/css/day.css' %}?version=9">
+  <link rel="stylesheet" type="text/css" href="{% static '/css/day.css' %}?version=10">
 {% endblock %}
 
 {% block content %}
@@ -24,14 +24,6 @@
     {% endif %}
 </div>
 
-<!-- <h2>To Do:</h2>
-{% for task in tasks %}
-<ul>
-    <li>- {{task.topic}}</li>
-</ul>
-
-{% endfor %} -->
-
 <div class="time-blocking">
     <ul>
         <li>
@@ -43,27 +35,43 @@
                 <p>{{block.start_time.time}} - {{block.end_time.time}}</p>
             </li>
         {% endfor %}
+        <li><h2>Sleep: {{ bedtime }}</h2></li>
     </ul>
 </div> 
 
+{% if cur_block and not block_form %}
 <div class="current-block">
     <h2 class="block-title">{{ cur_block.topic }}: {{ cur_block.start_time.time }} - {{ cur_block.end_time.time }}</h2>
     <div class="progress">
         <div class="progress-bar" role="progressbar" style="width: {{percent_done}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{percent_done}}%</div>
     </div>
-    <div class="form">
-        {% if task_form %}
-        <form method="POST" class="form-group" id="add-task-form">
-            {% csrf_token %}
-            {{ task_form|crispy }}
-            <button type="submit" class="btn btn-success" name="add_task">Add</button>
-        </form>
-        {% elif not block_form %}
-            <form method="get">
-                <button type="submit" class="btn btn-primary" name="add-task" value="add-task">Add Task</button>
-            </form>
-        {% endif %}
+    <div class="current-tasks">
+    <form method="post">
+        {% csrf_token %}
+        {% for task in tasks %}
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    {% if task.complete == True %}
+                        <input type="checkbox", value="clicked", name="c{{task.id}}" checked>
+                    {% else %}
+                        <input type="checkbox", value="clicked", name="c{{task.id}}">
+                    {% endif %}
+                </div>
+            </div>
+            <input type="text", value="{{task.name}}" class="form-control">
+        </div>
+        {% endfor %}
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <button type="submit", name="newTask", value="newItem", class="btn btn-primary">Add Task</button>
+            </div>
+            <input type="text", name="new">
+        </div>
+        <button type="submit", name="save", value="save", class="btn btn-primary">Save</button>
+    </form>
     </div>
 </div>
+{% endif %}
 
 {% endblock %}

@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 from calendar import HTMLCalendar
 from .models import Event
 import calendar
+import pytz
 
 class Calendar(HTMLCalendar):
     def __init__(self, year=None, month=None):
@@ -11,10 +12,11 @@ class Calendar(HTMLCalendar):
 
     # formats a day as a td
     # filter events by day
-    def formatday(self, day, events):
+    def formatday(self, day, events, request):
         events_per_day = events.filter(start_time__day=day)
         d = ''
-        today = datetime.today()
+        timezone = pytz.timezone(request.user.timezone)
+        today = datetime.now(timezone)
         for event in events_per_day:
             d += f'<li> {event.get_html_url} </li>'
 
@@ -26,7 +28,7 @@ class Calendar(HTMLCalendar):
         return '<td></td>'
 
     # formats a week as a tr
-    def formatweek(self, theweek, events):
+    def formatweek(self, theweek, events, request):
         week = ''
         for d, weekday in theweek:
             week += self.formatday(d, events)
@@ -34,14 +36,14 @@ class Calendar(HTMLCalendar):
 
     # formats a month as a table
     # filter events by year and month
-    def formatmonth(self, withyear=True):
+    def formatmonth(self, request, withyear=True):
         events = Event.objects.filter(start_time__year=self.year, start_time__month=self.month)
 
         cal = f'<table border="0" cellpadding="0" cellspacing="0" class="calendar">\n'
         cal += f'{self.formatmonthname(self.year, self.month, withyear=withyear)}\n'
         cal += f'{self.formatweekheader()}\n'
         for week in self.monthdays2calendar(self.year, self.month):
-            cal += f'{self.formatweek(week, events)}\n'
+            cal += f'{self.formatweek(week, events, request)}\n'
         return cal
 
     def prev_month(self, d):

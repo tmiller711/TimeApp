@@ -20,4 +20,4 @@ class BlockForm(ModelForm):
 class TaskForm(ModelForm):
     class Meta:
         model = Task
-        fields = ['name', 'description']
+        fields = ['name']
