@@ -24,7 +24,7 @@ class Calendar(HTMLCalendar):
             d += f'<li> {event.get_html_url} </li>'
 
         if day == today.day:
-            return f"<td class='today'><span class='date' id='today'><a class='day-link' href='{self.year}-{self.month}-{day}'>{day} - Today</a></span><ul> {d} </ul></td>"
+            return f"<td class='today'><span class='date' id='today'><a class='today-link' href='{self.year}-{self.month}-{day}'>{day} - Today</a></span><ul> {d} </ul></td>"
         elif day != 0:
             return f"<td><span class='date'><a class='day-link' href='{self.year}-{self.month}-{day}'>{day}</a></span><ul> {d} </ul></td>"
 

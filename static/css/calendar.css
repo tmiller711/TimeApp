@@ -6,7 +6,7 @@
   }
   
 .calendar tr, .calendar td {
-  border: 1px solid black;
+  border: 1px solid #0C151C;
 }
 
 .calendar th {
@@ -75,10 +75,14 @@ a.btn.btn-outline-primary.left:active {
 }
 
 td.today {
-  background-color: #967E76;
+  background-color: #0C151C;
 }
 
 
 a.day-link {
-  color: black;
+  color: #0C151C;
+}
+
+a.today-link {
+  color: #E4E5EA;
 }
