@@ -1,3 +1,12 @@
 form.profile-form {
     width: 500px;
 }
+
+div.settings {
+    position: absolute;
+    width: 500px;
+    left: 50%;
+    top: 10%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}

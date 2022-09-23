@@ -3,18 +3,12 @@
 {% load static %}
 
 {% block additionalStyles %}
-  <link rel="stylesheet" type="text/css" href="{% static '/css/profile.css' %}?version=5">
+  <link rel="stylesheet" type="text/css" href="{% static '/css/profile.css' %}?version=6">
 {% endblock %}
 
 {% block content %}
 <div class="row">
-    <div class="col-3">
-        <p>Name: {{request.user.username}}</p>
-        <p>Email: {{request.user.email}}</p>
-        <a href="/logout">Logout Here</a>
-    </div>
-
-    <div class="col-9">
+    <div class="settings">
         <form method="POST" class="profile-form">
             {% csrf_token %}
             {{form|crispy}}
