@@ -100,6 +100,8 @@ def check_reqeust(request, cur_block, blocks):
         for block in blocks:
             if request.POST.get("block" + str(block.id)) != block.topic:
                 Block.objects.filter(pk=block.id).update(topic=request.POST.get("block" + str(block.id)))
+            if request.POST.get("block" + str(block.id)) == "":
+                Block.objects.filter(pk=block.id).delete()
 
     elif request.POST.get("newTask"):
         name = request.POST.get("new")
