@@ -5,23 +5,19 @@
 {% block title %}test title{% endblock %}
 
 {% block additionalStyles %}
-  <link rel="stylesheet" type="text/css" href="{% static '/css/day.css' %}?version=10">
+  <link rel="stylesheet" type="text/css" href="{% static '/css/day.css' %}?version=16">
 {% endblock %}
 
 {% block content %}
 <h1>{{ date }} : {{ cur_time }}</h1>
 <div class="form">
-    {% if block_form %}
-        <form method="POST" class="form-group" id="add-task-form">
+    <div class="add-block">
+        <form method="POST" class="form-group" id="add-block-form">
             {% csrf_token %}
             {{ block_form|crispy }}
-            <button type="submit" class="btn btn-success" name="create_block">Save</button>
+            <button type="submit" class="btn btn-primary" name="create_block">Save</button>
         </form>
-    {% elif not block_form %}
-        <form method="get">
-            <button type="submit" class="btn btn-primary" name="add-block" value="add-block">Add Block</button>
-        </form>
-    {% endif %}
+    </div>
 </div>
 
 <div class="time-blocking">
@@ -39,12 +35,13 @@
                 </li>
             {% endfor %}
             <button type="submit", name="update-block", value="update-block", class="btn btn-primary">Update</button>
+            <button type="button" class="btn btn-primary" id="add-block-button" onClick="openForm(); this.style.display = 'none'">Add Block</button>
         </form>
         <li><h2>Sleep: {{ bedtime }}</h2></li>
     </ul>
 </div> 
 
-{% if cur_block and not block_form %}
+{% if cur_block %}
 <div class="current-block">
     <h2 class="block-title">{{ cur_block.topic }}: {{ cur_block.start_time.time }} - {{ cur_block.end_time.time }}</h2>
     <div class="progress">
@@ -78,5 +75,11 @@
     </div>
 </div>
 {% endif %}
+
+<script>
+    function openForm() {
+        document.getElementById("add-block-form").style.height = "100%";
+    }
+</script>
 
 {% endblock %}

@@ -54,7 +54,8 @@ def day(request, year, month, day):
             percent_done = int((cur_time_diff / time_diff) * 100)
 
     # check for POST and GET requests
-    block_form = check_reqeust(request, cur_block, blocks)
+    block_form = BlockForm
+    check_reqeust(request, cur_block, blocks)
     
     # sort tasks by start_time
     blocks.sort(key=attrgetter('start_time'))

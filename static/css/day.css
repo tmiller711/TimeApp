@@ -20,3 +20,15 @@ div.current-block {
     padding: 10px 500px 200px 10px;
     border: 1px solid black;
 }
+
+#add-block-form {
+    height: 0%;
+    width: 500px;
+    left: 510px;
+    position: absolute;
+    z-index: 1;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    transition: 0.5s;
+    padding-top: 10px;
+}
