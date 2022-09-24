@@ -54,16 +54,15 @@ def day(request, year, month, day):
             percent_done = int((cur_time_diff / time_diff) * 100)
 
     # check for POST and GET requests
+    if 'cur_block' not in locals():
+        cur_block = None
+
     block_form = BlockForm
     check_reqeust(request, cur_block, blocks)
     
     # sort tasks by start_time
     blocks.sort(key=attrgetter('start_time'))
-
-    if 'cur_block' in locals():
-        tasks = Task.objects.filter(block=cur_block)
-    else:
-        tasks = None
+    tasks = Task.objects.filter(block=cur_block)
 
     context = {'date': date, 'block_form': block_form, 'blocks': blocks,
              'cur_time': standard_time, 'wake_up_time': wake_up_time, 'bedtime': bedtime, 'tasks': tasks}

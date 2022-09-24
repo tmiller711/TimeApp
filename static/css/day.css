@@ -32,3 +32,7 @@ div.current-block {
     transition: 0.5s;
     padding-top: 10px;
 }
+
+hr.dashed {
+    border-top: 3px solid #0C151C;
+}

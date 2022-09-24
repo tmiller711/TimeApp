@@ -8,13 +8,12 @@ body {
     width: 0;
     position: fixed;
     z-index: 1;
-    top: 0;
-    left: 0;
     background-color: #6B99C3;
     overflow-x: hidden;
     overflow-y: hidden;
     transition: 0.5s;
     padding-top: 10px;
+    text-align: center;
 }
 
 .nav-links li {
@@ -22,7 +21,7 @@ body {
 }
   
 .nav-links a {
-    padding: 8px 8px 8px 32px;
+    padding-bottom: 12px;
     text-decoration: none;
     font-size: 25px;
     color: #0C151C;
@@ -59,12 +58,18 @@ body {
 .logo {
     display: block;
     margin-top: 30px;
-    margin-bottom: 130px;
+    margin-bottom: 30px;
 }
 
 .logo-img {
+    display: block;
     width: 150px;
-    margin-left: 36px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.info {
+    margin-bottom: 100px;
 }
 
 /* .active {
