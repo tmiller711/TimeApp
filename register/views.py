@@ -6,10 +6,13 @@ from .models import UserProfile
 # Create your views here.
 def register(request):
     user = request.user
+    # print(user)
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
+            # print(User.objects.filter(username=form['username'].value())[0])
+            UserProfile.objects.get_or_create(user=User.objects.filter(username=form['username'].value())[0])
 
         return redirect("/")
     else:
@@ -18,7 +21,7 @@ def register(request):
     return render(request, "register/register.html", {"form": form})
 
 def profile(request):
-    userprofile, created = UserProfile.objects.get_or_create(user=request.user)
+    userprofile = UserProfile.objects.get(user=request.user)
     if request.method == "POST":
         form = UserProfileForm(request.POST, instance=userprofile)
         if form.is_valid():
@@ -29,7 +32,7 @@ def profile(request):
     return render(request, "register/profile.html", {'form': form})
 
 def settings(request):
-    userprofile, created = UserProfile.objects.get_or_create(user=request.user)
+    userprofile = UserProfile.objects.get(user=request.user)
     if request.method == "POST":
         form = UserSettingsForm(request.POST, instance=userprofile)
         if form.is_valid():
