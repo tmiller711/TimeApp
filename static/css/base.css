@@ -24,13 +24,13 @@ body {
     padding-bottom: 12px;
     text-decoration: none;
     font-size: 25px;
-    color: #0C151C;
+    color: #E4E5EA;
     display: block;
     transition: 0.3s;
 }
 
 .sidenav a:hover {
-    color: #E4E5EA;
+    color: #0C151C;
 }
 
 .sidenav .closebtn {
@@ -40,8 +40,9 @@ body {
     font-size: 66px;
     margin-left: 10px;
     padding-left: 10px;
-    color: #0C151C;
+    color: #D2D2D4;
     text-decoration: none;
+    transition: 0.3s;
 }
 
 #content{
@@ -58,7 +59,7 @@ body {
 .logo {
     display: block;
     margin-top: 30px;
-    margin-bottom: 30px;
+    margin-bottom: 0px;
 }
 
 .logo-img {
@@ -68,8 +69,14 @@ body {
     margin-right: auto;
 }
 
-.info {
-    margin-bottom: 100px;
+.info .user-welcome {
+    margin-top: 20px;
+    margin-bottom: 80px;
+    color: #D2D2D4;
+}
+
+.info h2 {
+    color: #0C151C;
 }
 
 /* .active {
