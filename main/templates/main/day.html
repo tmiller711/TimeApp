@@ -23,7 +23,7 @@
 <div class="time-blocking">
     <ul>
         <li>
-            <h2>Wake up: {{wake_up_time}}</h2>
+            <h2>Wake up: {{request.user.userprofile.wake_up_time}}</h2>
         </li>
         <form method="post">
             {% csrf_token %}
@@ -38,7 +38,7 @@
             <button type="submit", name="update-block", value="update-block", class="btn btn-primary">Update</button>
             <button type="button" class="btn btn-primary" id="add-block-button" onClick="openForm(); this.style.display = 'none'">Add Block</button>
         </form>
-        <li><h2>Sleep: {{ bedtime }}</h2></li>
+        <li><h2>Sleep: {{ request.user.userprofile.bedtime }}</h2></li>
     </ul>
 </div> 
 
