@@ -1,9 +1,14 @@
+.clearfix {
+  margin: 15px;
+}
+
 .calendar {
-    width: 98%;
-    height: 90%;
-    margin: auto;
-    font-size: 13px;
-  }
+  position: relative;
+  width: 98%;
+  height: 100%;
+  margin: auto;
+  font-size: 13px;
+}
   
 .calendar tr, .calendar td {
   border: 1px solid #0C151C;
@@ -34,10 +39,6 @@ ul {
   padding: 0px 5px 0px 20px;
 }
 
-a {
-  color: #967E76;
-}
-
 .left {
   float: left;
 }
@@ -51,23 +52,6 @@ a {
   color: black;
   background-color: transparent;
   box-shadow: 0 0 0 0;
-}
-
-.clearfix {
-  margin: 15px;
-}
-
-.form {
-  margin: auto;
-}
-
-.form input, .form select, .form textarea {
-  border-radius: 5px;
-  border: 1px solid #967E76;
-  outline: none;
-  background: none;
-  padding: 5px;
-  width: 100%;
 }
 
 a.btn.btn-outline-primary.left:active {

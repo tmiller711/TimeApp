@@ -62,6 +62,7 @@ def day(request, year, month, day):
     
     # sort tasks by start_time
     blocks.sort(key=attrgetter('start_time'))
+    print(blocks)
     tasks = Task.objects.filter(block=cur_block)
 
     context = {'date': date, 'block_form': block_form, 'blocks': blocks,

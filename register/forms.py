@@ -19,6 +19,11 @@ class UserSettingsForm(ModelForm):
     class Meta:
         model = UserProfile
         fields = ['timezone', 'wake_up_time', 'bedtime']
+        labels = {
+            'timezone': 'Timezone',
+            'wake_up_time': 'Wake Up Time',
+            'bedtime': 'Bedtime'
+        }
         timezones = [('America/Chicago', 'America/Chicago'), ('America/New_York', 'America/New_York')]
         widgets = {
             'timezone': Select(choices=timezones),

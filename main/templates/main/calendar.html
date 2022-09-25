@@ -5,13 +5,17 @@
 {% endblock %}
 
 {% block additionalStyles %}
-  <link rel="stylesheet" type="text/css" href="{% static '/css/calendar.css' %}?version=6">
+  <link rel="stylesheet" type="text/css" href="{% static '/css/calendar.css' %}?version=14">
 {% endblock %}
 
 {% block content %}
+<div class="stuff">
   <div class="clearfix">
     <a class="btn btn-outline-primary left" href="{% url 'cal:calendar' %}?{{ prev_month }}"> Previous Month </a>
     <a class="btn btn-outline-primary right" href="{% url 'cal:calendar' %}?{{ next_month }}"> Next Month </a>
   </div>
-  {{ calendar }}
-{% endblock %}
+  <div class="calendar-div">
+    {{ calendar }}
+  </div>
+</div>
+  {% endblock %}
