@@ -2,14 +2,6 @@ body {
     background: #E4E5EA;
 }
 
-/* div.login {
-    margin: auto;
-    width: 500px;
-    text-align: center;
-    top: 50%;
-    transform: translateY(-50%);
-} */
-
 div.login {
     position: absolute;
     width: 500px;
@@ -28,4 +20,8 @@ div.register {
     top: 50%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+}
+
+.asteriskField {
+    display: None;
 }
