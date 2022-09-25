@@ -9,7 +9,7 @@ class BlockForm(ModelForm):
             'start_time': DateInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
             'end_time': DateInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
         }
-        fields = ['topic', 'description', 'start_time', 'end_time']
+        fields = ['topic', 'start_time', 'end_time']
 
     def __init__(self, *args, **kwargs):
         super(BlockForm, self).__init__(*args, **kwargs)

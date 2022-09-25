@@ -18,7 +18,6 @@ class Event(models.Model):
 class Block(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     topic = models.CharField(max_length=200)
-    description = models.TextField(blank=True)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
 

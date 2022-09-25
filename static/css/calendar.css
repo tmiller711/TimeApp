@@ -23,7 +23,13 @@
 .calendar td {
   width: 200px;
   height: 130px;
-  padding: 20px 0px 0px 5px;
+  padding: 10px 0px 0px 5px;
+}
+
+td a {
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 .month {

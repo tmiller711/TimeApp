@@ -54,6 +54,7 @@ body {
     bottom:0px;
     left:0px;
     background: #E4E5EA;
+    overflow-y: hidden;
 }
 
 .logo {

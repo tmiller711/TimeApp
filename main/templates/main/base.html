@@ -8,16 +8,16 @@
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/700caa9d7b.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="{% static '/css/base.css' %}?version=18">
+    <link rel="stylesheet" type="text/css" href="{% static '/css/base.css' %}?version=19">
     {% block additionalStyles %}{% endblock %}
 </head>
 <body>
     <div class="header">
         <div class="sidenav" id="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="#" class="logo">
+            <!-- <a href="/" class="logo"> -->
                 <img src="{% static '/images/logo.png' %}?version=2" alt="404" class="logo-img">
-            </a>
+            <!-- </a> -->
             <div class="info">
                 <div class="time">
                     <h1>{{ time }}<br></h1>
