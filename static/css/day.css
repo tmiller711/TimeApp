@@ -36,3 +36,7 @@ div.current-block {
 hr.dashed {
     border-top: 3px solid #0C151C;
 }
+
+#close-block-form {
+    display: None;
+}
