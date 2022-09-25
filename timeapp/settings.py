@@ -72,6 +72,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
 
                 'main.context_processors.time',
+                'main.context_processors.today',
             ],
         },
     },

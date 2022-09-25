@@ -24,7 +24,8 @@ class UserSettingsForm(ModelForm):
             'wake_up_time': 'Wake Up Time',
             'bedtime': 'Bedtime'
         }
-        timezones = [('America/Chicago', 'America/Chicago'), ('America/New_York', 'America/New_York')]
+        timezones = [('America/Chicago', 'America/Chicago'), ('America/New_York', 'America/New York'),
+                    ('America/Denver', 'America/Denver'), ('America/Los_Angeles', 'America/Los Angeles')]
         widgets = {
             'timezone': Select(choices=timezones),
             'wake_up_time': TimeInput(attrs={'type': 'time'}, format='%H:%M'),
