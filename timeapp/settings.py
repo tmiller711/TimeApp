@@ -131,6 +131,16 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_FROM = 'tmille2004@gmail.com'
+EMAIL_HOST_USER = 'tmille2004@gmail.com'
+EMAIL_HOST_PASSWORD = 'tcqzsmsmtyzbnzca'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+PASSWORD_RESET_TIMEOUT = 14400
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
@@ -142,7 +152,8 @@ LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/login'
 LOGIN_EXEMPT_URLS = (
     r'^logout/$',
-    r'^register/$'
+    r'^register/$',
+    r'^activate/'
 )
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"

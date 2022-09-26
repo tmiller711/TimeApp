@@ -1,6 +1,5 @@
 from datetime import datetime, timedelta
 from calendar import HTMLCalendar
-from this import d
 from .models import Event
 import calendar
 import pytz

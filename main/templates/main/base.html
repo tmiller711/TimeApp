@@ -41,6 +41,7 @@
 
     <div id="content", name="content", class="main">
         <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span>
+        {% include 'main/includes/messaging.html' %}
         <div class="main-block">
             {% block content %}
             {% endblock %}
