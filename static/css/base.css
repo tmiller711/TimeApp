@@ -55,6 +55,7 @@ body {
     left:0px;
     background: #E4E5EA;
     overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 .logo {
@@ -81,7 +82,7 @@ body {
 }
 
 .active {
-    background: white;
+    background: #E4E5EA;
     width: 80%;
     height: 73px;
     position: absolute;
@@ -118,4 +119,10 @@ body {
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
+}
+
+.alert {
+    text-align: center;
+    width: 60%;
+    margin-left: 20%;
 }
