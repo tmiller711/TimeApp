@@ -11,7 +11,7 @@ from operator import attrgetter
 from django.contrib import messages
 
 from .models import *
-from .utils import Calendar, calc_time_dif, get_timezone, check_reqeust
+from .utils import Calendar, calc_time_dif, get_timezone, check_reqeust, check_blocks
 from .forms import TaskForm, BlockForm
 
 def calendar_view(request):
@@ -38,21 +38,7 @@ def day(request, year, month, day):
     wake_up_time = time(8, 0, 0)
     bedtime = time(22, 0, 0)
 
-    b = Block.objects.filter(user=request.user)
-    blocks = []
-    for block in b:
-        block_date = block.start_time.date().strftime('%Y-%-m-%-d')
-        block_starttime = block.start_time.time()
-        block_endtime = block.end_time.time()
-
-        if block_date == date:
-            blocks.append(block)
-
-        if block_starttime <= mil_time and block_endtime >= mil_time:
-            cur_block = block
-            time_diff = calc_time_dif(block_starttime, block_endtime)
-            cur_time_diff = calc_time_dif(block_starttime, mil_time)
-            percent_done = int((cur_time_diff / time_diff) * 100)
+    (blocks, cur_block, percent_done) = check_blocks(request, date, mil_time)
 
     # check for POST and GET requests
     if 'cur_block' not in locals():
@@ -60,6 +46,9 @@ def day(request, year, month, day):
 
     block_form = BlockForm
     check_reqeust(request, cur_block, blocks)
+
+    # have to recheck for all the blocks because they might have changed one in check_request
+    (blocks, cur_block, percent_done) = check_blocks(request, date, mil_time)
     
     # sort tasks by start_time
     blocks.sort(key=attrgetter('start_time'))
@@ -80,4 +69,3 @@ def get_date(req_day):
         year, month = (int(x) for x in req_day.split('-'))
         return date(year, month, day=1)
     return datetime.today()
-

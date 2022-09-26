@@ -78,13 +78,10 @@ def check_reqeust(request, cur_block, blocks):
         if block_form.is_valid():
             user = request.user
             topic = block_form['topic'].value()
-            description = block_form['description'].value()
             start_time = block_form['start_time'].value()
             end_time = block_form['end_time'].value()
-            b = Block(user=user, topic=topic, description=description, start_time=start_time, end_time=end_time)
+            b = Block(user=user, topic=topic, start_time=start_time, end_time=end_time)
             b.save()
-            block_form = None
-            return block_form
 
     elif 'save-tasks' in request.POST:
         for task in Task.objects.all():
@@ -107,8 +104,25 @@ def check_reqeust(request, cur_block, blocks):
         if len(name) > 2:
             t = Task(name=name, complete=False, block=cur_block)
             t.save()
-            
-    elif request.method == "GET":
-        if request.GET.get('add-block') == 'add-block':
-            block_form = BlockForm()
-            return block_form
+
+def check_blocks(request, date, mil_time):
+    b = Block.objects.filter(user=request.user)
+    blocks = []
+    for block in b:
+        block_date = block.start_time.date().strftime('%Y-%-m-%-d')
+        block_starttime = block.start_time.time()
+        block_endtime = block.end_time.time()
+
+        if block_date == date:
+            blocks.append(block)
+
+        if block_starttime <= mil_time and block_endtime >= mil_time:
+            cur_block = block
+            time_diff = calc_time_dif(block_starttime, block_endtime)
+            cur_time_diff = calc_time_dif(block_starttime, mil_time)
+            percent_done = int((cur_time_diff / time_diff) * 100)
+        else:
+            cur_block = None
+            percent_done = None
+
+    return blocks, cur_block, percent_done
