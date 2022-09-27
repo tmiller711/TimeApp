@@ -5,7 +5,7 @@
 {% block title %}Schedule{% endblock %}
 
 {% block additionalStyles %}
-  <link rel="stylesheet" type="text/css" href="{% static '/css/day.css' %}?version=18">
+  <link rel="stylesheet" type="text/css" href="{% static '/css/day.css' %}?version=2">
 {% endblock %}
 
 {% block content %}
@@ -37,7 +37,7 @@
             {% endfor %}
             <button type="submit", name="update-block", value="update-block", class="btn btn-primary">Update</button>
             <button type="button" class="btn btn-primary" id="add-block-button" onClick="openForm(); this.style.display = 'none'">Add Block</button>
-            <button type="button" class="btn btn-primary" id="close-block-form" onClick="closeForm(); this.style.display = 'none'">Close Form</button>
+            <button type="button" class="btn btn-secondary" id="close-block-form" onClick="closeForm(); this.style.display = 'none'">Close Form</button>
         </form>
         <li><h2>Sleep: {{ request.user.userprofile.bedtime }}</h2></li>
     </ul>

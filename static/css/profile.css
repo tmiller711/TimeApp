@@ -28,3 +28,8 @@ div.settings {
 .asteriskField {
     display: None;
 }
+
+.btn {
+    margin-top: 6.5px;
+    color: #E4E5EA;
+}

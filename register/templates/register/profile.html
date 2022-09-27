@@ -5,7 +5,7 @@
 {% block title %}Profile{% endblock %}
 
 {% block additionalStyles %}
-  <link rel="stylesheet" type="text/css" href="{% static '/css/profile.css' %}?version=7">
+  <link rel="stylesheet" type="text/css" href="{% static '/css/profile.css' %}?version=2">
 {% endblock %}
 
 {% block content %}
@@ -20,7 +20,7 @@
         <form method="POST" class="profile-form">
             {% csrf_token %}
             {{form|crispy}}
-            <button type="submit" class="btn btn-success">Update</button>
+            <button type="submit" class="btn btn-primary">Update</button>
         </form>
     </div>
 </div>

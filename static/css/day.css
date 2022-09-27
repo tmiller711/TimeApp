@@ -40,3 +40,7 @@ hr.dashed {
 #close-block-form {
     display: None;
 }
+
+.btn {
+    color: #E4E5EA;
+}
