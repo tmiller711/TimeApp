@@ -126,3 +126,7 @@ body {
     width: 60%;
     margin-left: 20%;
 }
+
+.btn:hover {
+    color: #E4E5EA !important;
+}
