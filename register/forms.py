@@ -3,21 +3,23 @@ from django import forms
 from django.forms import ModelForm, Select, TimeInput
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import UserProfile
+from django.contrib.auth import get_user_model
+
+from .models import Account
 
 class RegisterForm(UserCreationForm):
     class Meta:
-        model = User
+        model = get_user_model()
         fields = ["username", "email", "password1", "password2"]
 
 class UserProfileForm(ModelForm):
     class Meta:
-        model = UserProfile
+        model = get_user_model()
         fields = ['name', 'phone']
 
 class UserSettingsForm(ModelForm):
     class Meta:
-        model = UserProfile
+        model = get_user_model()
         fields = ['timezone', 'wake_up_time', 'bedtime']
         labels = {
             'timezone': 'Timezone',
@@ -32,6 +34,6 @@ class UserSettingsForm(ModelForm):
             'bedtime': TimeInput(attrs={'type': 'time'}, format="%H:%M")
         }
 
-    # def __init__(self, *args, **kwargs):
-    #     super(UserSettingsForm, self).__init__(*args, **kwargs)
-    #     self.fields['wake_up_time'].input_formats = ('%-H:$M',)
+    def __init__(self, *args, **kwargs):
+        super(UserSettingsForm, self).__init__(*args, **kwargs)
+        self.fields['wake_up_time'].input_formats = ('%-H:$M',)

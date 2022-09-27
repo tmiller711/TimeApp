@@ -107,6 +107,8 @@ def check_reqeust(request, cur_block, blocks):
 
 def check_blocks(request, date, mil_time):
     b = Block.objects.filter(user=request.user)
+    cur_block = None
+    percent_done = None
     blocks = []
     for block in b:
         block_date = block.start_time.date().strftime('%Y-%-m-%-d')
@@ -121,8 +123,5 @@ def check_blocks(request, date, mil_time):
             time_diff = calc_time_dif(block_starttime, block_endtime)
             cur_time_diff = calc_time_dif(block_starttime, mil_time)
             percent_done = int((cur_time_diff / time_diff) * 100)
-        else:
-            cur_block = None
-            percent_done = None
 
     return blocks, cur_block, percent_done

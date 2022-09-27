@@ -23,8 +23,8 @@
                     <h1>{{ time }}<br></h1>
                 </div>
                 <div class="user-welcome">
-                    {% if request.user.userprofile.name %}
-                    <h3>Welcome,<br><h2>{{request.user.userprofile.name}}</h2></h3>
+                    {% if request.user.name %}
+                    <h3>Welcome,<br><h2>{{request.user.name}}</h2></h3>
                     {% else %}
                     <h3>Welcome,<br><p class="user">{{request.user}}</p></h3>
                     {% endif %}

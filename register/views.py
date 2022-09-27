@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib.auth import login
+from django.contrib.auth import login, get_user_model
 from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -9,11 +9,11 @@ from django.core.mail import EmailMessage
 from django.contrib import messages
 
 from .forms import RegisterForm, UserProfileForm, UserSettingsForm
-from .models import UserProfile
+from .models import Account
 from .tokens import accounts_activation_token
 
 def activate(request, uidb64, token):
-    # User = get_user_model()
+    User = get_user_model()
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
@@ -25,7 +25,7 @@ def activate(request, uidb64, token):
         user.save()
         
         messages.success(request, "Thank you for your email confirmation. Now you can login your account.")
-        login(request, user)
+        login(request, user, backend='register.backends.CaseInsensitiveModelBackend')
 
         return redirect('/')
     else:
@@ -59,7 +59,6 @@ def register(request):
             user.is_active=False
             user.save()
             activate_email(request, user, form.cleaned_data.get('email'))
-            UserProfile.objects.get_or_create(user=User.objects.filter(username=form['username'].value())[0])
 
         return redirect("/")
     else:
@@ -68,23 +67,21 @@ def register(request):
     return render(request, "register/register.html", {"form": form})
 
 def profile(request):
-    userprofile = UserProfile.objects.get(user=request.user)
     if request.method == "POST":
-        form = UserProfileForm(request.POST, instance=userprofile)
+        form = UserProfileForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
     else:
-        form = UserProfileForm(instance=userprofile)
+        form = UserProfileForm(instance=request.user)
 
     return render(request, "register/profile.html", {'form': form})
 
 def settings(request):
-    userprofile = UserProfile.objects.get(user=request.user)
     if request.method == "POST":
-        form = UserSettingsForm(request.POST, instance=userprofile)
+        form = UserSettingsForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
     else:
-        form = UserSettingsForm(instance=userprofile)
+        form = UserSettingsForm(instance=request.user)
 
     return render(request, "register/settings.html", {'form': form})

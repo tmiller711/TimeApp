@@ -10,6 +10,7 @@ if hasattr(settings, 'LOGIN_EXEMPT_URLS'):
 
 # instead of adding the login_required decorator to each view this does it for us
 class LoginRequiredMiddleware:
+    pass
     def __init__(self, get_response):
         self.get_response = get_response
 

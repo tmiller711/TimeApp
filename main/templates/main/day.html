@@ -23,7 +23,7 @@
 <div class="time-blocking">
     <ul>
         <li>
-            <h2>Wake up: {{request.user.userprofile.wake_up_time}}</h2>
+            <h2>Wake up: {{request.user.wake_up_time}}</h2>
         </li>
         <form method="post">
             {% csrf_token %}

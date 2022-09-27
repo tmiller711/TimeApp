@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
+from register.models import Account
 
 # Create your models here.
 
@@ -16,7 +17,7 @@ class Event(models.Model):
         return f'<a href="{url}"> {self.title} </a>'
 
 class Block(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(Account, on_delete=models.CASCADE)
     topic = models.CharField(max_length=200)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
