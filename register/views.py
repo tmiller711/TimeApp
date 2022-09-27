@@ -79,6 +79,7 @@ def profile(request):
 def settings(request):
     if request.method == "POST":
         form = UserSettingsForm(request.POST, instance=request.user)
+        print(form['wake_up_time'])
         if form.is_valid():
             form.save()
     else:

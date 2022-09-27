@@ -36,4 +36,4 @@ class UserSettingsForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(UserSettingsForm, self).__init__(*args, **kwargs)
-        self.fields['wake_up_time'].input_formats = ('%-H:$M',)
+        self.fields['wake_up_time'].input_formats = ('%H:%M',)
