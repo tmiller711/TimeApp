@@ -76,12 +76,16 @@ def get_timezone(request):
 
 def check_reqeust(request, cur_block, blocks):
     if 'create_block' in request.POST:
+        print("test")
         block_form = BlockForm(request.POST)
         if block_form.is_valid():
+            print("test2")
             user = request.user
             topic = block_form['topic'].value()
             start_time = block_form['start_time'].value()
-            end_time = block_form['end_time'].value()
+
+            end_time = block_form.cleaned_data.get('start_time') + timedelta(hours=int(block_form['length'].value()))
+
             b = Block(user=user, topic=topic, start_time=start_time, end_time=end_time)
             b.save()
 

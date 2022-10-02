@@ -29,10 +29,14 @@ class UserSettingsForm(ModelForm):
         }
         timezones = [('America/Chicago', 'America/Chicago'), ('America/New_York', 'America/New York'),
                     ('America/Denver', 'America/Denver'), ('America/Los_Angeles', 'America/Los Angeles')]
+
+        themes = [('Light', 'Light'), ('Dark', 'Dark')]
+
         widgets = {
             'timezone': Select(choices=timezones),
             'wake_up_time': TimeInput(attrs={'type': 'time'}, format='%H:%M'),
-            'bedtime': TimeInput(attrs={'type': 'time'}, format="%H:%M")
+            'bedtime': TimeInput(attrs={'type': 'time'}, format="%H:%M"),
+            'theme': Select(choices=themes),
         }
 
     def __init__(self, *args, **kwargs):
