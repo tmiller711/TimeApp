@@ -40,6 +40,7 @@ class Account(AbstractBaseUser):
     timezone = models.CharField(max_length=50, default='America/Chicago')
     wake_up_time = models.TimeField(default=datetime.time(8, 0))
     bedtime = models.TimeField(default=datetime.time(22, 0))
+    theme = models.CharField(max_length=30, default="Light")
 
     date_joined = models.DateTimeField(verbose_name="date joined", auto_now_add=True)
     last_login = models.DateTimeField(verbose_name="last login", auto_now=True)

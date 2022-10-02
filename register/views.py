@@ -12,60 +12,6 @@ from .forms import RegisterForm, UserProfileForm, UserSettingsForm, ResendConfir
 from .models import Account
 from .tokens import accounts_activation_token
 
-def resend_confirm(request):
-    if request.method == "POST":
-        form = ResendConfirmationForm(request.POST)
-        if form.is_valid():
-            try:
-                user = Account.objects.get(email=form.cleaned_data.get('email'), is_active=False)
-                activate_email(request, user, form.cleaned_data.get('email'))
-                return redirect('/login')
-            except:
-                messages.error(request, "Could not find an unactivated account with that email")
-                return redirect('/resend_confirmation/')
-    else:
-        form = ResendConfirmationForm()
-    return render(request, 'register/resend_confirm.html', {'form': form})
-
-def activate(request, uidb64, token):
-    User = get_user_model()
-    try:
-        uid = force_str(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
-    except:
-        user = None
-
-    if user is not None and accounts_activation_token.check_token(user, token):
-        user.is_active = True
-        user.save()
-        
-        messages.success(request, "Thank you for your email confirmation. Now you can login your account.")
-        login(request, user, backend='register.backends.CaseInsensitiveModelBackend')
-
-        return redirect('/')
-    else:
-        messages.error(request, "Activation link is invalid! Click here to send another <a href='/resendconfirmation'>Resend</a>")
-    return redirect('/')
-
-def activate_email(request, user, to_email):
-    mail_subject = "Activate your user accounts"
-    message = render_to_string("template_activate_account.html", {
-        'user': user.username,
-        'domain': get_current_site(request).domain,
-        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-        'token': accounts_activation_token.make_token(user),
-        'protocol': 'https' if request.is_secure() else 'http'
-    })
-    email = EmailMessage(mail_subject, message, to=[to_email])
-    if email.send():
-        print("sent")
-        messages.success(request, f'Dear <b>{user}</b>, please go to you email <b>{to_email}</b> inbox and click on \
-                received activation link to confirm and complete the registration. <b>Note:</b> Check your spam folder.')
-    else:
-        print("not sent")
-        messages.error(request, f'Problem sending email to {to_email}, check if you typed it correctly.')
-
-# Create your views here.
 def register(request):
     user = request.user
     # print(user)
@@ -105,7 +51,7 @@ def settings(request):
     return render(request, "register/settings.html", {'form': form})
 
 
-
+# password reset functionality
 def password_reset(request):
     if request.method == "POST":
         form = ResendConfirmationForm(request.POST)
@@ -162,3 +108,58 @@ def reset(request, uidb64, token):
         else:
             form = PasswordResetForm()
             return render(request, 'register/password_reset.html', {'form': form})
+
+
+# email activation functionality
+def resend_confirm(request):
+    if request.method == "POST":
+        form = ResendConfirmationForm(request.POST)
+        if form.is_valid():
+            try:
+                user = Account.objects.get(email=form.cleaned_data.get('email'), is_active=False)
+                activate_email(request, user, form.cleaned_data.get('email'))
+                return redirect('/login')
+            except:
+                messages.error(request, "Could not find an unactivated account with that email")
+                return redirect('/resend_confirmation/')
+    else:
+        form = ResendConfirmationForm()
+    return render(request, 'register/resend_confirm.html', {'form': form})
+
+def activate(request, uidb64, token):
+    User = get_user_model()
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except:
+        user = None
+
+    if user is not None and accounts_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        
+        messages.success(request, "Thank you for your email confirmation. Now you can login your account.")
+        login(request, user, backend='register.backends.CaseInsensitiveModelBackend')
+
+        return redirect('/')
+    else:
+        messages.error(request, "Activation link is invalid! Click here to send another <a href='/resendconfirmation'>Resend</a>")
+    return redirect('/')
+
+def activate_email(request, user, to_email):
+    mail_subject = "Activate your user accounts"
+    message = render_to_string("template_activate_account.html", {
+        'user': user.username,
+        'domain': get_current_site(request).domain,
+        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        'token': accounts_activation_token.make_token(user),
+        'protocol': 'https' if request.is_secure() else 'http'
+    })
+    email = EmailMessage(mail_subject, message, to=[to_email])
+    if email.send():
+        print("sent")
+        messages.success(request, f'Dear <b>{user}</b>, please go to you email <b>{to_email}</b> inbox and click on \
+                received activation link to confirm and complete the registration. <b>Note:</b> Check your spam folder.')
+    else:
+        print("not sent")
+        messages.error(request, f'Problem sending email to {to_email}, check if you typed it correctly.')

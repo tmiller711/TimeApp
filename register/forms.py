@@ -20,11 +20,12 @@ class UserProfileForm(ModelForm):
 class UserSettingsForm(ModelForm):
     class Meta:
         model = get_user_model()
-        fields = ['timezone', 'wake_up_time', 'bedtime']
+        fields = ['timezone', 'wake_up_time', 'bedtime', 'theme']
         labels = {
             'timezone': 'Timezone',
             'wake_up_time': 'Wake Up Time',
-            'bedtime': 'Bedtime'
+            'bedtime': 'Bedtime',
+            'theme': 'Theme',
         }
         timezones = [('America/Chicago', 'America/Chicago'), ('America/New_York', 'America/New York'),
                     ('America/Denver', 'America/Denver'), ('America/Los_Angeles', 'America/Los Angeles')]
@@ -37,6 +38,7 @@ class UserSettingsForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(UserSettingsForm, self).__init__(*args, **kwargs)
         self.fields['wake_up_time'].input_formats = ('%H:%M',)
+
 
 class ResendConfirmationForm(forms.Form):
     email = forms.EmailField(max_length=100)
