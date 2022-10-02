@@ -18,8 +18,10 @@ class Calendar(HTMLCalendar):
         events_per_day = events.filter(start_time__day=day)
         d = ''
         timezone = pytz.timezone(get_timezone(request))
-        today = datetime.now(timezone).strftime("%Y-%-m-%d")
+        today = datetime.now(timezone).strftime("%Y-%-m-%-d")
 
+        # if day < 10:
+        #     day = f"0{day}"
         calendar_day = f"{self.year}-{self.month}-{day}"
         if calendar_day == today:
             return f"<td class='today'><span class='date' id='today'><a class='today-link' href='{self.year}-{self.month}-{day}'>{day} - Today</a></span><ul> {d} </ul></td>"
