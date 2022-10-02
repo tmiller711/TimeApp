@@ -158,7 +158,10 @@ LOGIN_URL = '/login'
 LOGIN_EXEMPT_URLS = (
     r'^logout/$',
     r'^register/$',
-    r'^activate/'
+    r'^activate/',
+    r'^resend_confirmation/$',
+    r'^password_reset/$',
+    r'^reset/',
 )
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"

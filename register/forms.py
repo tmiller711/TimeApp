@@ -3,7 +3,7 @@ from django import forms
 from django.forms import ModelForm, Select, TimeInput
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, password_validation
 
 from .models import Account
 
@@ -37,3 +37,24 @@ class UserSettingsForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(UserSettingsForm, self).__init__(*args, **kwargs)
         self.fields['wake_up_time'].input_formats = ('%H:%M',)
+
+class ResendConfirmationForm(forms.Form):
+    email = forms.EmailField(max_length=100)
+
+class PasswordResetForm(UserCreationForm):
+    password1 = forms.CharField(
+        label="New Passowrd",
+        strip=False,
+        widget=forms.PasswordInput,
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+    password2 = forms.CharField(
+        label="Confirm New Passowrd",
+        strip=False,
+        widget=forms.PasswordInput,
+        help_text="Passwords Must Match",
+    )
+
+    class Meta:
+        model = get_user_model()
+        fields = ['password1', 'password2']
