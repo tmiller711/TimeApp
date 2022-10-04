@@ -1,0 +1,46 @@
+form#add-task-form {
+    width: 500px;
+}
+
+div.time-blocking {
+    position: relative;
+    float: left;
+    padding: 10px 10px 10px 10px;
+}
+
+div.form {
+    float: right;
+}
+
+div.current-block {
+    position: absolute;
+    float: right;
+    bottom: 0;
+    right: 0;
+    padding: 10px 500px 200px 10px;
+    border: 1px solid black;
+}
+
+#add-block-form {
+    height: 0%;
+    width: 500px;
+    left: 510px;
+    position: absolute;
+    z-index: 1;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    transition: 0.5s;
+    padding-top: 10px;
+}
+
+hr.dashed {
+    border-top: 3px solid #0C151C;
+}
+
+#close-block-form {
+    display: None;
+}
+
+.btn {
+    color: #E4E5EA;
+}

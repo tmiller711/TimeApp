@@ -3,6 +3,7 @@ from tabnanny import check
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
 from django.http import HttpResponse
 from django.views import generic
+from django.views.generic import TemplateView
 from django.utils.safestring import mark_safe
 from calendar import HTMLCalendar
 from django.urls import reverse
@@ -22,7 +23,8 @@ def calendar_view(request):
     prev_month = cal.prev_month(d)
     next_month = cal.next_month(d)
     # print(html_cal)
-    return render(request, 'main/calendar.html', {'calendar': calendar, 'prev_month': prev_month, 'next_month': next_month})
+    test = 'base'
+    return render(request, 'main/calendar.html', {'calendar': calendar, 'prev_month': prev_month, 'next_month': next_month, 'test':test})
 
 
 def day(request, year, month, day):

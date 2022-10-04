@@ -30,7 +30,7 @@ class UserSettingsForm(ModelForm):
         timezones = [('America/Chicago', 'America/Chicago'), ('America/New_York', 'America/New York'),
                     ('America/Denver', 'America/Denver'), ('America/Los_Angeles', 'America/Los Angeles')]
 
-        themes = [('Light', 'Light'), ('Dark', 'Dark')]
+        themes = [('light', 'Light'), ('dark', 'Dark')]
 
         widgets = {
             'timezone': Select(choices=timezones),

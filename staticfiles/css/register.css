@@ -1,0 +1,37 @@
+body {
+    background: #E4E5EA;
+}
+
+div.login {
+    position: absolute;
+    width: 500px;
+    text-align: center;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+div.register {
+    position: absolute;
+    width: 500px;
+    text-align: center;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.asteriskField {
+    display: None;
+}
+
+.alert {
+    text-align: center;
+    width: 60%;
+    margin-left: 20%;
+}
+
+.btn {
+    color: #E4E5EA;
+}

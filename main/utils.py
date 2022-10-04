@@ -76,10 +76,8 @@ def get_timezone(request):
 
 def check_reqeust(request, cur_block, blocks):
     if 'create_block' in request.POST:
-        print("test")
         block_form = BlockForm(request.POST)
         if block_form.is_valid():
-            print("test2")
             user = request.user
             topic = block_form['topic'].value()
             start_time = block_form['start_time'].value()
@@ -124,7 +122,7 @@ def check_blocks(request, date, mil_time):
         if block_date == date:
             blocks.append(block)
 
-        if block_starttime <= mil_time and block_endtime >= mil_time:
+        if block_starttime <= mil_time and block_endtime >= mil_time and block_date == date:
             cur_block = block
             time_diff = calc_time_dif(block_starttime, block_endtime)
             cur_time_diff = calc_time_dif(block_starttime, mil_time)

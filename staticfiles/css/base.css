@@ -1,0 +1,132 @@
+body {
+    font-family: "Poppins", sans-serif;
+    transition: background-color .5s;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    background-color: #6B99C3;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    transition: 0.5s;
+    padding-top: 10px;
+    text-align: center;
+}
+
+.nav-links li {
+    list-style: none;
+}
+  
+.nav-links a {
+    padding-bottom: 12px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #E4E5EA;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #0C151C;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 20px;
+    font-size: 66px;
+    margin-left: 10px;
+    padding-left: 10px;
+    color: #D2D2D4;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+#content{
+    transition: margin-left .5s;
+    padding: 16px;
+    position:absolute;
+    top:0px;
+    right:0px;
+    bottom:0px;
+    left:0px;
+    background: #E4E5EA;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.logo {
+    display: block;
+    margin-top: 30px;
+    margin-bottom: 0px;
+}
+
+.logo-img {
+    display: block;
+    width: 150px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.info .user-welcome {
+    margin-top: 20px;
+    margin-bottom: 80px;
+    color: #D2D2D4;
+}
+
+.info h2 {
+    color: #0C151C;
+}
+
+.active {
+    background: #E4E5EA;
+    width: 80%;
+    height: 73px;
+    position: absolute;
+    top: 4%;
+    margin-left: 10%;
+    z-index: -1;
+    border-radius: 6px;
+    box-shadow: 0 5px 10px rgba(255, 255, 255, 0.4);
+    display: none;
+    transition: top 0.3s;
+}
+
+.nav-links li:hover a {
+    color: #0C151C;
+    transition: 0.3s;
+}
+
+.nav-links li:hover ~ .active {
+    display: block;
+}
+
+.nav-links li:nth-child(1):hover ~ .active {
+    top: 43%;
+}
+
+.nav-links li:nth-child(2):hover ~ .active {
+    top: 53.2%;
+}
+
+.nav-links li:nth-child(3):hover ~ .active {
+    top: 63.9%;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+
+.alert {
+    text-align: center;
+    width: 60%;
+    margin-left: 20%;
+}
+
+.btn:hover {
+    color: #E4E5EA !important;
+}
