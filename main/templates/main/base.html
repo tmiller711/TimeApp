@@ -21,7 +21,7 @@
             </a>
             <div class="info">
                 <div class="time">
-                    <h1>{{ time }}<br></h1>
+                    <h1 id="time"><br></h1>
                 </div>
                 <div class="user-welcome">
                     {% if request.user.name %}
@@ -70,6 +70,6 @@
         document.body.style.backgroundColor = "#6B99C3";
     }
     </script>
-    
+    <script type="text/javascript" src="{% static 'javascript/main.js' %}"></script>
 </body>
 </html>

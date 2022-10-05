@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta, date, time
 from tabnanny import check
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views import generic
 from django.views.generic import TemplateView
 from django.utils.safestring import mark_safe
@@ -23,8 +23,14 @@ def calendar_view(request):
     prev_month = cal.prev_month(d)
     next_month = cal.next_month(d)
     # print(html_cal)
-    test = 'base'
-    return render(request, 'main/calendar.html', {'calendar': calendar, 'prev_month': prev_month, 'next_month': next_month, 'test':test})
+
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        cur_time = pytz.timezone(get_timezone(request)) 
+        standard_time = datetime.now(cur_time).strftime("%-I:%M%p")
+
+        return JsonResponse({'time': standard_time})
+
+    return render(request, 'main/calendar.html', {'calendar': calendar, 'prev_month': prev_month, 'next_month': next_month})
 
 
 def day(request, year, month, day):
@@ -63,6 +69,11 @@ def day(request, year, month, day):
         context['cur_block'] = cur_block
         context['percent_done'] = percent_done
 
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        percent_done = percent_done
+
+        return JsonResponse({'percent_done': percent_done})
+
     return render(request, 'main/day.html', context)
 
 
@@ -71,3 +82,23 @@ def get_date(req_day):
         year, month = (int(x) for x in req_day.split('-'))
         return date(year, month, day=1)
     return datetime.today()
+
+def get_percent_done(request):
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        cur_time = pytz.timezone(get_timezone(request))
+        mil_time = str(datetime.now(cur_time).time()).split('.')[0]
+        mil_time = datetime.strptime(mil_time, "%H:%M:%S").time()
+        
+        b = Block.objects.filter(user=request.user)
+        percent_done = None
+        for block in b:
+            block_date = block.start_time.date().strftime('%Y-%-m-%-d')
+            block_starttime = block.start_time.time()
+            block_endtime = block.end_time.time()
+
+            if block_starttime <= mil_time and block_endtime >= mil_time:
+                time_diff = calc_time_dif(block_starttime, block_endtime)
+                cur_time_diff = calc_time_dif(block_starttime, mil_time)
+                percent_done = int((cur_time_diff / time_diff) * 100)
+
+        return JsonResponse({'percent_done': percent_done})

@@ -1,5 +1,6 @@
 import pytz
 from datetime import datetime
+
 from .utils import get_timezone
 
 def time(request):
